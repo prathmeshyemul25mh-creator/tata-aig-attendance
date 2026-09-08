@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Tata AIG | Attendance Scanner</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div>
+      <h1>Tata AIG</h1>
+      <p>Campus Recruitment Attendance</p>
+    </div>
+
+    <button id="adminBtn" class="admin-btn">Admin</button>
+  </header>
+
+  <main>
+
+    <!-- SCANNER -->
+    <section id="scannerPage" class="page">
+
+      <div class="scanner-card">
+
+        <div class="camera-container">
+          <video id="video" autoplay playsinline muted></video>
+
+          <div class="scan-frame">
+            <div class="corner top-left"></div>
+            <div class="corner top-right"></div>
+            <div class="corner bottom-left"></div>
+            <div class="corner bottom-right"></div>
+
+            <div class="scan-line"></div>
+          </div>
+
+          <div id="cameraMessage" class="camera-message">
+            Starting camera...
+          </div>
+        </div>
+
+        <div class="controls">
+
+          <label>
+            Zoom
+            <input
+              id="zoomSlider"
+              type="range"
+              min="1"
+              max="3"
+              step="0.1"
+              value="1"
+            />
+            <span id="zoomValue">1×</span>
+          </label>
+
+          <button id="startBtn" class="primary-btn">
+            Start Scanner
+          </button>
+
+        </div>
+
+        <div class="instructions">
+          <strong>Scan the enrollment number</strong>
+          <span>Keep the printed enrollment number inside the box</span>
+          <span>Example: 25BSPHH01C0902</span>
+        </div>
+
+      </div>
+
+      <div id="result" class="result hidden">
+        <div id="resultIcon"></div>
+        <h2 id="resultTitle"></h2>
+        <p id="resultName"></p>
+        <p id="resultEnroll"></p>
+        <p id="resultTime"></p>
+      </div>
+
+      <canvas id="canvas" hidden></canvas>
+
+    </section>
+
+
+    <!-- ADMIN LOGIN -->
+    <section id="loginPage" class="page hidden">
+
+      <div class="admin-card">
+
+        <button id="backFromLogin" class="back-btn">← Back</button>
+
+        <h2>Admin Access</h2>
+        <p>Enter the administrator code.</p>
+
+        <input
+          id="adminCode"
+          type="password"
+          placeholder="Admin code"
+          autocomplete="off"
+        />
+
+        <button id="loginBtn" class="primary-btn">
+          Login
+        </button>
+
+        <p id="loginError" class="error"></p>
+
+      </div>
+
+    </section>
+
+
+    <!-- DASHBOARD -->
+    <section id="dashboardPage" class="page hidden">
+
+      <div class="dashboard-header">
+        <div>
+          <h2>Attendance Dashboard</h2>
+          <p>Tata AIG Campus Recruitment</p>
+        </div>
+
+        <button id="logoutBtn" class="admin-btn">
+          Logout
+        </button>
+      </div>
+
+
+      <div class="stats">
+
+        <div class="stat-card">
+          <span>Total Candidates</span>
+          <strong id="totalCandidates">0</strong>
+        </div>
+
+        <div class="stat-card">
+          <span>Present</span>
+          <strong id="presentCount">0</strong>
+        </div>
+
+        <div class="stat-card">
+          <span>Remaining</span>
+          <strong id="remainingCount">0</strong>
+        </div>
+
+        <div class="stat-card">
+          <span>Attendance</span>
+          <strong id="attendancePercent">0%</strong>
+        </div>
+
+      </div>
+
+
+      <div class="dashboard-actions">
+
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="Search enrollment number or name..."
+        />
+
+        <button id="refreshBtn" class="secondary-btn">
+          Refresh
+        </button>
+
+        <button id="csvBtn" class="secondary-btn">
+          Export CSV
+        </button>
+
+      </div>
+
+
+      <div class="table-container">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>Enrollment No.</th>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Marked At</th>
+            </tr>
+          </thead>
+
+          <tbody id="attendanceTable"></tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    Tata AIG • Attendance System
+  </footer>
+
+
+  <!-- Tesseract OCR -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="app.js"></script>
+
+</body>
+</html>
